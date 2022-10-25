@@ -4,6 +4,7 @@ import openai
 import pymongo
 import streamlit as st
 from pymongo.server_api import ServerApi
+from utils import long_test
 
 openai.api_key = st.secrets["API_KEY"]
 DB_PASSWORD = st.secrets["DB_PASSWORD"]
@@ -39,22 +40,22 @@ surname = st.sidebar.text_input("Surname")
 
 pdf_file_name = st.sidebar.selectbox("Select a pdf file (not supported yet)", PDF_FILES)
 
-col1, col2, col3 = st.columns(3)
+col1, col3 = st.columns(2)
 
 with col1:
-    with open(f"files/{pdf_file_name}", "rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+    # with open(f"files/{pdf_file_name}", "rb") as f:
+    #     base64_pdf = base64.b64encode(f.read()).decode('utf-8')
 
-        # Embedding PDF in HTML
         # pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" ' \
         #               F'height="800" type="application/pdf"></iframe>'
-        pdf_display = """
-        <embed src="https://drive.google.com/viewerng/
-        viewer?embedded=true&url=https://library.oapen.org/bitstream/id/4e47582f-1f98-4501-9012
-        -a62b16f6e251/638898.pdf" width="700" height="800">
-        """
+    #     pdf_display = """
+    #     <embed src="https://drive.google.com/viewerng/
+    #     viewer?embedded=true&url=https://www.cartercenter.org/resources/pdfs/health/ephti/library/lecture_notes/health_extension_trainees/ln_intro_psych_final.pdf" width="700" height="800">
+    #     """
+    #
+    # st.markdown(pdf_display, unsafe_allow_html=True)
 
-    st.markdown(pdf_display, unsafe_allow_html=True)
+    st.text_area("label", long_test, height=800, label_visibility="hidden")
 
 
 def get_payload(text):
