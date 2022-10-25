@@ -148,7 +148,7 @@ with col3:
 
             curr_tokens = col.find_one({"_id": address})["num_tokens"]
             print(f"Current tokens: {curr_tokens}")
-            if curr_tokens < 100:
+            if curr_tokens < 1000:
 
                 kwargs = get_payload(text)[prompt]
                 response = openai.Completion.create(
@@ -167,6 +167,7 @@ with col3:
 
                 print(response)
             else:
-                st.error("You have reached your limit of 200 tokens.")
+                st.error("You have reached your limit of 200 tokens. Contact "
+                         "danko.skala@gmail.com to get more tokens.")
 
 st.markdown("---")
