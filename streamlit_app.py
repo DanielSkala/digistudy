@@ -40,14 +40,6 @@ client = pymongo.MongoClient(f"mongodb+srv://DanielSkala:{DB_PASSWORD}@digistudy
                              server_api=ServerApi('1'))
 db = client.test
 
-hide_menu_style = """
-        <style>
-        #MainMenu {visibility: hidden; }
-        footer {visibility: hidden;}
-        </style>
-        """
-st.markdown(hide_menu_style, unsafe_allow_html=True)
-
 st.markdown("## Welcome to Digistudy")
 st.markdown("##### World's most advanced AI-powered study tool")
 
