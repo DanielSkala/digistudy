@@ -16,7 +16,6 @@ openai.api_key = os.getenv("API_KEY")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 GPT_MODEL = "text-davinci-002"  # text-ada-001
 PDF_FILES = ["ethics.pdf", "skala_assaf.pdf", "validation.pdf", "test.pdf"]
-MAC_ADDRESS = str(hex(uuid.getnode()))
 CA = certifi.where()
 
 client = pymongo.MongoClient(f"mongodb+srv://DanielSkala:{DB_PASSWORD}@digistudydemo.ih5ikoh"
@@ -40,16 +39,20 @@ client = pymongo.MongoClient(f"mongodb+srv://DanielSkala:{DB_PASSWORD}@digistudy
                              server_api=ServerApi('1'))
 db = client.test
 
-st.markdown("## Welcome to Digistudy")
+st.markdown("## Welcome to Digistudy (DEMO)")
 st.markdown("##### World's most advanced AI-powered study tool")
 
 # SIDEBAR #
 st.sidebar.image('img/logo.png', width=250)
 
-uploaded_file = st.sidebar.file_uploader("Upload a pdf file", type="pdf")
+uploaded_file = st.sidebar.file_uploader("Upload a pdf file (not supported yet)", type="pdf")
+
+st.sidebar.markdown("Needed for authentication")
+name = st.sidebar.text_input("Name")
+surname = st.sidebar.text_input("Surname")
+
 pdf_file_name = st.sidebar.selectbox("Select a pdf file", PDF_FILES)
 
-st.sidebar.image('img/sidebar.png', width=250)
 
 col1, col2, col3 = st.columns(3)
 
@@ -128,17 +131,18 @@ with col3:
     # create a button
     button = st.button('Submit')
 
-    if button:
+    if button and name != "" and surname != "":
+        user_id = name.capitalize()+surname.capitalize()
         with st.spinner('Generating...'):
 
             # Retrieve the mac address
             try:
-                address = col.find_one({"_id": MAC_ADDRESS})["_id"]
+                user_id = col.find_one({"_id": user_id})["_id"]
             except Exception:
-                col.insert_one({"_id": MAC_ADDRESS, "num_tokens": 0})
+                col.insert_one({"_id": user_id, "num_tokens": 0})
                 st.info("New user detected. Please submit again.")
 
-            curr_tokens = col.find_one({"_id": address})["num_tokens"]
+            curr_tokens = col.find_one({"_id": user_id})["num_tokens"]
             print(f"Current tokens: {curr_tokens}")
             if curr_tokens < 1000:
 
@@ -153,13 +157,16 @@ with col3:
                     presence_penalty=kwargs["presence_penalty"]
                 )
                 tokens_amt = len(response["choices"][0]["text"].split())
-                col.update_one({"_id": address},
+                col.update_one({"_id": user_id},
                                {"$set": {"num_tokens": curr_tokens + tokens_amt}})
                 st.write(response["choices"][0]["text"])
 
                 print(response)
             else:
-                st.error("You have reached your limit of 200 tokens. Contact "
+                st.error("You have reached your limit of 1000 tokens. Contact "
                          "danko.skala@gmail.com to get more tokens.")
+
+    elif button and (name == "" or surname == ""):
+        st.error("Please enter your name and surname.")
 
 st.markdown("---")
