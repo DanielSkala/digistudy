@@ -46,11 +46,10 @@ with col1:
     with open(f"files/{pdf_file_name}", "rb") as f:
         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
 
-    # Embedding PDF in HTML
-    pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" ' \
-                  F'height="800" type="application/pdf"></iframe>'
+        # Embedding PDF in HTML
+        pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" ' \
+                      F'height="800" type="application/pdf"></iframe>'
 
-    # Displaying File
     st.markdown(pdf_display, unsafe_allow_html=True)
 
 
