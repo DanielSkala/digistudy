@@ -50,6 +50,10 @@ with col1:
         pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" ' \
                       F'height="800" type="application/pdf"></iframe>'
 
+    meta = """
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; object-src 'self' blob:; style-src 'self'; frame-src 'self'">
+    """
+    st.markdown(meta, unsafe_allow_html=True)
     st.markdown(pdf_display, unsafe_allow_html=True)
 
 
