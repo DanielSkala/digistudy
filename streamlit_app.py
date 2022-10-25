@@ -1,14 +1,8 @@
 import base64
-
-
 import certifi
-import matplotlib as mpl
 import openai
 import pymongo
 import streamlit as st
-from matplotlib.backends.backend_agg import RendererAgg
-# Make Plotly work in your Jupyter Notebook
-from plotly.offline import init_notebook_mode
 from pymongo.server_api import ServerApi
 
 openai.api_key = st.secrets["API_KEY"]
@@ -21,13 +15,6 @@ client = pymongo.MongoClient(f"mongodb+srv://DanielSkala:{DB_PASSWORD}@digistudy
                              f".mongodb.net/?retryWrites=true&w=majority", tlsCAFile=CA)
 db = client["users"]
 col = db["usage"]
-
-init_notebook_mode(connected=True)
-# Use Plotly locally
-
-mpl.use("agg")
-
-_lock = RendererAgg.lock
 
 apptitle = 'Digistudy'
 
