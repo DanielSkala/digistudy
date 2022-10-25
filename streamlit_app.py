@@ -47,13 +47,14 @@ with col1:
         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
 
         # Embedding PDF in HTML
-        pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" ' \
-                      F'height="800" type="application/pdf"></iframe>'
+        # pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" ' \
+        #               F'height="800" type="application/pdf"></iframe>'
+        pdf_display = """
+        <embed src="https://drive.google.com/viewerng/
+        viewer?embedded=true&url=https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" width="400" height="400">
+        """
 
-    meta = """
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; object-src 'self' blob:; style-src 'self'; frame-src 'self'">
-    """
-    st.markdown(meta, unsafe_allow_html=True)
+
     st.markdown(pdf_display, unsafe_allow_html=True)
 
 
