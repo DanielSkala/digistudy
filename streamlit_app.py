@@ -1,6 +1,5 @@
 import base64
-import os
-import uuid
+
 
 import certifi
 import matplotlib as mpl
@@ -12,8 +11,8 @@ from matplotlib.backends.backend_agg import RendererAgg
 from plotly.offline import init_notebook_mode
 from pymongo.server_api import ServerApi
 
-openai.api_key = os.getenv("API_KEY")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
+openai.api_key = st.secrets["API_KEY"]
+DB_PASSWORD = st.secrets["DB_PASSWORD"]
 GPT_MODEL = "text-davinci-002"  # text-ada-001
 PDF_FILES = ["ethics.pdf", "skala_assaf.pdf", "validation.pdf", "test.pdf"]
 CA = certifi.where()
