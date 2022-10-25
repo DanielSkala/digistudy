@@ -37,8 +37,7 @@ st.sidebar.markdown("Needed for authentication")
 name = st.sidebar.text_input("Name")
 surname = st.sidebar.text_input("Surname")
 
-pdf_file_name = st.sidebar.selectbox("Select a pdf file", PDF_FILES)
-
+pdf_file_name = st.sidebar.selectbox("Select a pdf file (not supported yet)", PDF_FILES)
 
 col1, col2, col3 = st.columns(3)
 
@@ -51,9 +50,9 @@ with col1:
         #               F'height="800" type="application/pdf"></iframe>'
         pdf_display = """
         <embed src="https://drive.google.com/viewerng/
-        viewer?embedded=true&url=https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" width="400" height="400">
+        viewer?embedded=true&url=https://library.oapen.org/bitstream/id/4e47582f-1f98-4501-9012
+        -a62b16f6e251/638898.pdf" width="700" height="800">
         """
-
 
     st.markdown(pdf_display, unsafe_allow_html=True)
 
@@ -122,7 +121,7 @@ with col3:
     button = st.button('Submit')
 
     if button and name != "" and surname != "":
-        user_id = name.capitalize()+surname.capitalize()
+        user_id = name.capitalize() + surname.capitalize()
         with st.spinner('Generating...'):
 
             # Retrieve the mac address
