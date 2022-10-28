@@ -104,6 +104,14 @@ def get_payload(text):
             "top_p": 1,
             "frequency_penalty": 0.5,
             "presence_penalty": 0.0
+        },
+        "Freestyle": {
+            "model": GPT_MODEL,
+            "prompt": text,
+            "temperature": 0.7,
+            "max_tokens": 256,
+            "frequency_penalty": 0.1,
+            "presence_penalty": 0.0
         }
     }
     return kwargs
@@ -111,7 +119,7 @@ def get_payload(text):
 
 with col3:
     functions = ["Summarize", "Bullet points", "Explain to a child", "Give an example",
-                 "Chat with AI"]
+                 "Chat with AI", "Freestyle"]
     prompt = st.selectbox('Select a function', functions)
 
     # create a text input field
